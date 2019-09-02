@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  Lifes Progress
+//  Life-tracker
 //
-//  Created by Cummings, Dan on 9/2/19.
+//  Created by Cummings, Dan on 8/27/19.
 //  Copyright © 2019 Cummings, Dan. All rights reserved.
 //
 

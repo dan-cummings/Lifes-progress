@@ -13,6 +13,11 @@
 		6BE575F3231DCC30001A2623 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BE575F1231DCC30001A2623 /* Main.storyboard */; };
 		6BE575FF231DCC30001A2623 /* Lifes_ProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE575FE231DCC30001A2623 /* Lifes_ProgressTests.swift */; };
 		6BE5760A231DCC30001A2623 /* Lifes_ProgressUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57609231DCC30001A2623 /* Lifes_ProgressUITests.swift */; };
+		6BE57618231DCCB5001A2623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57617231DCCB5001A2623 /* SettingsViewController.swift */; };
+		6BE5761F231DCCE0001A2623 /* StatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BE57619231DCCE0001A2623 /* StatusViewController.xib */; };
+		6BE57620231DCCE0001A2623 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE5761A231DCCE0001A2623 /* StatusViewController.swift */; };
+		6BE57623231DCCE0001A2623 /* StatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE5761D231DCCE0001A2623 /* StatusController.swift */; };
+		6BE57626231DCCF2001A2623 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57625231DCCF2001A2623 /* EventMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +51,11 @@
 		6BE57605231DCC30001A2623 /* Lifes ProgressUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lifes ProgressUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BE57609231DCC30001A2623 /* Lifes_ProgressUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifes_ProgressUITests.swift; sourceTree = "<group>"; };
 		6BE5760B231DCC30001A2623 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BE57617231DCCB5001A2623 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		6BE57619231DCCE0001A2623 /* StatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusViewController.xib; sourceTree = "<group>"; };
+		6BE5761A231DCCE0001A2623 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		6BE5761D231DCCE0001A2623 /* StatusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusController.swift; sourceTree = "<group>"; };
+		6BE57625231DCCF2001A2623 /* EventMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +106,11 @@
 		6BE575EA231DCC2F001A2623 /* Lifes Progress */ = {
 			isa = PBXGroup;
 			children = (
+				6BE57625231DCCF2001A2623 /* EventMonitor.swift */,
+				6BE5761D231DCCE0001A2623 /* StatusController.swift */,
+				6BE5761A231DCCE0001A2623 /* StatusViewController.swift */,
+				6BE57619231DCCE0001A2623 /* StatusViewController.xib */,
+				6BE57617231DCCB5001A2623 /* SettingsViewController.swift */,
 				6BE575EB231DCC2F001A2623 /* AppDelegate.swift */,
 				6BE575ED231DCC2F001A2623 /* ViewController.swift */,
 				6BE575EF231DCC30001A2623 /* Assets.xcassets */,
@@ -228,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BE5761F231DCCE0001A2623 /* StatusViewController.xib in Resources */,
 				6BE575F0231DCC30001A2623 /* Assets.xcassets in Resources */,
 				6BE575F3231DCC30001A2623 /* Main.storyboard in Resources */,
 			);
@@ -254,8 +270,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BE57620231DCCE0001A2623 /* StatusViewController.swift in Sources */,
 				6BE575EE231DCC2F001A2623 /* ViewController.swift in Sources */,
 				6BE575EC231DCC2F001A2623 /* AppDelegate.swift in Sources */,
+				6BE57623231DCCE0001A2623 /* StatusController.swift in Sources */,
+				6BE57618231DCCB5001A2623 /* SettingsViewController.swift in Sources */,
+				6BE57626231DCCF2001A2623 /* EventMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
