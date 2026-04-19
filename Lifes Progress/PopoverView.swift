@@ -8,38 +8,37 @@
 import SwiftUI
 
 struct PopoverView: View {
-    @Bindable var model: ProgressModel
+    @ObservedObject var model: ProgressModel
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             Text("Life's Progress")
-                .font(.system(.headline, design: .rounded))
+                .font(.system(.subheadline, design: .rounded))
                 .foregroundStyle(.secondary)
-                .padding(.top, 4)
 
-            // Progress rings in a 2-column grid
-            let columns = [GridItem(.flexible()), GridItem(.flexible())]
-            LazyVGrid(columns: columns, spacing: 12) {
+            // Progress rings in a compact 3-column grid
+            let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 3)
+            LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(model.visibleTimeframes) { timeframe in
-                    ProgressRingView(
-                        timeframe: timeframe,
-                        progress: model.progress[timeframe] ?? 0,
-                        isSelected: model.selectedTimeframe == timeframe
-                    )
-                    .onTapGesture {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            model.selectedTimeframe = timeframe
-                        }
+                    Button {
+                        model.selectTimeframe(timeframe)
+                    } label: {
+                        ProgressRingView(
+                            timeframe: timeframe,
+                            progress: model.progress[timeframe] ?? 0,
+                            isSelected: model.selectedTimeframe == timeframe
+                        )
                     }
-                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
                 }
             }
 
             Divider()
 
             // Birthday section
-            HStack {
+            HStack(spacing: 6) {
                 Image(systemName: "birthday.cake")
+                    .font(.caption2)
                     .foregroundStyle(.secondary)
 
                 if let birthday = model.birthday {
@@ -55,22 +54,22 @@ struct PopoverView: View {
 
                 DatePicker("", selection: Binding(
                     get: { model.birthday ?? Date() },
-                    set: { model.birthday = $0 }
+                    set: { model.setBirthday($0) }
                 ), displayedComponents: .date)
                 .labelsHidden()
                 .datePickerStyle(.compact)
                 .frame(width: 100)
             }
 
-            Button("Quit Life's Progress") {
+            Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
-            .font(.caption)
+            .font(.caption2)
         }
-        .padding(20)
-        .frame(width: 280)
+        .padding(14)
+        .frame(width: 300)
     }
 }
 
@@ -81,11 +80,11 @@ struct ProgressRingView: View {
     let progress: Double
     let isSelected: Bool
 
-    private let ringSize: CGFloat = 76
-    private let lineWidth: CGFloat = 7
+    private let ringSize: CGFloat = 52
+    private let lineWidth: CGFloat = 5
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 3) {
             ZStack {
                 // Background track
                 Circle()
@@ -101,28 +100,29 @@ struct ProgressRingView: View {
                     .rotationEffect(.degrees(-90))
                     .animation(.easeInOut(duration: 0.6), value: progress)
 
-                // Center icon + percentage
-                VStack(spacing: 1) {
-                    Image(systemName: timeframe.icon)
-                        .font(.system(size: 13))
-                        .foregroundStyle(timeframe.color)
-
-                    Text(String(format: "%.1f%%", progress))
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .monospacedDigit()
-                }
+                // Center percentage
+                Text(String(format: "%.0f%%", progress))
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .monospacedDigit()
             }
             .frame(width: ringSize, height: ringSize)
 
-            Text(timeframe.displayName)
-                .font(.system(.caption, design: .rounded))
-                .fontWeight(isSelected ? .semibold : .regular)
-                .foregroundStyle(isSelected ? timeframe.color : .secondary)
+            // Label with icon
+            HStack(spacing: 2) {
+                Image(systemName: timeframe.icon)
+                    .font(.system(size: 8))
+                Text(timeframe.displayName)
+                    .font(.system(size: 10, design: .rounded))
+            }
+            .fontWeight(.medium)
+            .foregroundStyle(isSelected ? timeframe.color : .secondary)
         }
-        .padding(8)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
         .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .fill(isSelected ? timeframe.color.opacity(0.08) : Color.clear)
         )
+        .contentShape(Rectangle())
     }
 }

@@ -6,16 +6,16 @@
 import Cocoa
 import SwiftUI
 
-class StatusController {
+class StatusController: NSObject {
 
     let statusItem: NSStatusItem
     let popover = NSPopover()
-    var eventMonitor: EventMonitor?
     let model = ProgressModel()
     private var timer: Timer?
 
     init(statusBarItem: NSStatusItem) {
         self.statusItem = statusBarItem
+        super.init()
 
         if let button = statusItem.button {
             button.font = NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
@@ -25,13 +25,14 @@ class StatusController {
         }
 
         let hostingController = NSHostingController(rootView: PopoverView(model: model))
+        hostingController.sizingOptions = .preferredContentSize
         popover.contentViewController = hostingController
         popover.behavior = .transient
 
-        eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
-            if let self, self.popover.isShown {
-                self.closePopover(sender: event)
-            }
+        // Update status bar immediately when user changes selection
+        model.onStatusBarUpdate = { [weak self] in
+            guard let self else { return }
+            self.statusItem.button?.title = self.model.statusBarText
         }
 
         // Refresh the status bar text every second
@@ -52,12 +53,10 @@ class StatusController {
     func showPopover(sender: Any?) {
         if let button = statusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-            eventMonitor?.start()
         }
     }
 
     func closePopover(sender: Any?) {
         popover.performClose(sender)
-        eventMonitor?.stop()
     }
 }

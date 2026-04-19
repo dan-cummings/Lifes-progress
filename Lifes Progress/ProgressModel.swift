@@ -48,22 +48,13 @@ enum Timeframe: String, CaseIterable, Identifiable {
     }
 }
 
-@Observable
-class ProgressModel {
-    var birthday: Date? {
-        didSet {
-            UserDefaults.standard.set(birthday, forKey: "birthday")
-            updateProgress()
-        }
-    }
+class ProgressModel: ObservableObject {
+    @Published var birthday: Date?
+    @Published var selectedTimeframe: Timeframe = .day
+    @Published var progress: [Timeframe: Double] = [:]
 
-    var selectedTimeframe: Timeframe {
-        didSet {
-            UserDefaults.standard.set(selectedTimeframe.rawValue, forKey: "visibleindicator")
-        }
-    }
-
-    var progress: [Timeframe: Double] = [:]
+    /// Called when the status bar text needs an immediate refresh.
+    var onStatusBarUpdate: (() -> Void)?
 
     private var timer: Timer?
 
@@ -87,6 +78,19 @@ class ProgressModel {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.updateProgress()
         }
+    }
+
+    func selectTimeframe(_ timeframe: Timeframe) {
+        selectedTimeframe = timeframe
+        UserDefaults.standard.set(timeframe.rawValue, forKey: "visibleindicator")
+        onStatusBarUpdate?()
+    }
+
+    func setBirthday(_ date: Date?) {
+        birthday = date
+        UserDefaults.standard.set(date, forKey: "birthday")
+        updateProgress()
+        onStatusBarUpdate?()
     }
 
     func updateProgress() {
